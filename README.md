@@ -11,11 +11,15 @@ authorized_keys file's content should have the authorized public key that will b
 
 The hosts file must only contain the hosts entry for the puppet master.
 
+In this example, I have am deploying from my laptop. My laptop's hostname is laptop and I have manually added the hosts entry for puppet. I also have a deployment user called myuser on my laptop
+
+myuser@laptop
+
 
 Deploying the base script and puppet agent
 ==========================================
 
-First you must run the copytoslave.sh from your local machine from which you will deploy with 4 parameter as such:
+First you must run the copytoslave.sh from your local machine from which you will deploy with 5 parameter as such:
 
 1. user with root access to the deployment box
 2. fqdn of deployment box
@@ -25,11 +29,17 @@ First you must run the copytoslave.sh from your local machine from which you wil
 
 An example of this would be 
 
-user@mylaptop:~$ ./copytoslave.sh root 192.168.0.11 myuser webserver ~/.ssh/id_rsa
+myuser@mylaptop:~$ ./copytoslave.sh root 192.168.0.11 myuser webserver ~/.ssh/id_rsa
 
 You should now be able to run puppet agent as root user or with sudo. Never run pupet agent as the deployment user!!!
 
-myuser@webserver:~$ sudo puppet agent --verbose --no-deamonize
+Once the script has run successfully you should be able to ssh as myuser and your private key into the new box. You should not be prompted a password.
+
+You should be able to su into root without a password. Puppet Agent must be run as the root user. If you run is as your deployment user, you will run into access issues and other SSL issues.
+
+myuser@laptop:~$ ssh myuser@192.168.0.11 -i ~/.ssh/id_rsa
+myuser@webserver:~$ sudo su - 
+root@webserver:~$ puppet agent --verbose --no-deamonize
 
 
 
@@ -43,6 +53,7 @@ Scp over the file installpupmaster.sh to the deployment user's home directory (s
 
 Run the command as the depoyment user:
 
+myuser@laptop:~$ ssh myuser@puppet
 myuser@puppet:~$ ./installpupmaster.sh myuser
 
 
