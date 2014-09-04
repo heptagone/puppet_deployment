@@ -37,8 +37,12 @@ Once the script has run successfully you should be able to ssh as myuser and you
 
 You should be able to su into root without a password. Puppet Agent must be run as the root user. If you run is as your deployment user, you will run into access issues and other SSL issues.
 
+
+
 myuser@laptop:~$ ssh myuser@192.168.0.11 -i ~/.ssh/id_rsa
+
 myuser@webserver:~$ sudo su - 
+
 root@webserver:~$ puppet agent --verbose --no-deamonize
 
 
