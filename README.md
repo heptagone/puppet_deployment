@@ -34,7 +34,6 @@ An example of this would be
 ```
 myuser@mylaptop:~$ ./copytoslave.sh root 192.168.0.11 myuser webserver ~/.ssh/id_rsa
 ```
-You should now be able to run puppet agent as root user or with sudo. Never run pupet agent as the deployment user!!!
 
 Once the script has run successfully you should be able to ssh as myuser and your private key into the new box. You should not be prompted a password.
 
